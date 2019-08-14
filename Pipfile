@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+pypiwin32 = "*"
+pyserial = "*"
+twisted = "*"
+#Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools"
+python-vlc = "==3.0.6109"
+#setx /M path "%path%;D:\vlc-3.0.6-64" then RESTART!!
+#PyGObject = "*"
+screeninfo = "*"
+wmi = "*"
+keyboard = "*"
+autobahn = "*"
+[requires]
+python_version = "3.7"
