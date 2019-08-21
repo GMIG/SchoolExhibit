@@ -3,6 +3,7 @@ import os
 import tkinter as tk
 from tkinter import ttk
 from VLCPlayer import VLCPlayer
+import platform
 
 class VLCPlayerTK(tk.Frame, VLCPlayer):
     def __init__(self, tk_instance, geometry: str, vlc_instance):
@@ -14,7 +15,10 @@ class VLCPlayerTK(tk.Frame, VLCPlayer):
         self.canvas = tk.Canvas(self.video_panel, background='black', highlightthickness=0)
         self.canvas.pack(fill=tk.BOTH, expand=1)
         self.video_panel.pack(fill=tk.BOTH, expand=1)
-        self.media_player.set_hwnd(self.video_panel.winfo_id())
+        if platform.system() == 'Linux':
+                self.media_player.set_xwindow(self.video_panel.winfo_id())
+        elif platform.system() == 'Windows':
+                self.media_player.set_hwnd(self.video_panel.winfo_id())
         #self.container_instance.wm_attributes("-topmost", 1)
         self.container_instance.overrideredirect(True)
         self.container_instance.bind('<KeyPress-F5>', lambda e: self.container_instance.wm_attributes("-topmost", 0))

@@ -9,6 +9,7 @@ from TalkerListener import Talker
 from VLCPlayer import VLCPlayer
 from millis import millis
 from vlc import EventType,EventManager
+from ResourcesPaths import mediaPath
 
 class VolumeNaidenov(Scene):
 
@@ -18,7 +19,7 @@ class VolumeNaidenov(Scene):
         self.audio_player = VLCPlayer(vlc.Instance())
         self.audio_player.media_player.audio_output_set(b'waveout')
         self.audio_player.media_list_player.set_playback_mode(vlc.PlaybackMode.loop)
-        self.audio_player.play_file("D:\\SCEXIB\\ff.mp3")
+        self.audio_player.play_file(mediaPath + "ff.mp3")
         self.lastT = 0
         self.lastVal = 0
         self.decrease_volume_looper = LoopingCall(self.decrease_volume)

@@ -33,10 +33,14 @@ class ArduinoUniversal(LineReceiver, Device):
 
     def lineReceived(self, data):
         try:
-            string = codec(str(data, 'utf-8'))
-            self.say_array(string)
-        except TypeError as err:
+            string = codec(str(data, 'ascii'))
+        except ValueError as err:
             logging.error(err, exc_info=True)
+            return
+        else:
+            self.say_array(string)
+            return
+
             #traceback.print_exc()
 
     def connectionMade(self):

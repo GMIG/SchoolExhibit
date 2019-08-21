@@ -6,7 +6,7 @@ from Scene import Scene
 from TalkerListener import Talker
 from VLCPlayer import VLCPlayer
 from VLCPlayerTK import VLCPlayerTK
-
+from ResourcesPaths import mediaPath
 
 class MainScene(Talker):
 
@@ -15,24 +15,23 @@ class MainScene(Talker):
         self.player = VLCPlayerTK(tk_instance, geometry, vlc_instance)
 
         self.player.media_player.audio_output_set(b'mmdevice')
-        self.player.media_list_player.set_playback_mode(vlc.PlaybackMode.default)
         self.player.media_list.lock()
-        self.player.media_list.add_media("D:\\SCEXIB\\01.mp4")
-        self.player.media_list.add_media("D:\\SCEXIB\\00.mp4")
-        self.player.media_list.add_media("D:\\SCEXIB\\2.mp4")
-        self.player.media_list.add_media("D:\\SCEXIB\\3.mp4")
-        self.player.media_list.add_media("D:\\SCEXIB\\4o.mp4")
+        self.player.media_list.add_media(mediaPath + "1.mp4")
+        self.player.media_list.add_media(mediaPath + "2.mp4")
+        self.player.media_list.add_media(mediaPath + "3.mp4")
+        self.player.media_list.add_media(mediaPath + "4.mp4")
+        self.player.media_list.add_media(mediaPath + "5.mp4")
         self.player.media_list.unlock()
-        self.player.media_list_player.play_item_at_index(0)
         self.player.media_list_player.set_playback_mode(vlc.PlaybackMode.repeat)
+        self.player.media_list_player.play_item_at_index(0)
         self.player.add_listener("end", self.__on_end)
         self.mainPlaying = True
 
     def start_video(self, num, *args, **kwargs):
         self.mainPlaying = False
         self.player.media_list_player.play_item_at_index(num)
-        self.player.setbrightness(0)
-        self.player.unfade(0.3)
+        #self.player.setbrightness(0)
+        #self.player.unfade(0.3)
         self.say("started_video", num)
 
     # For debug only
@@ -44,5 +43,8 @@ class MainScene(Talker):
             self.player.media_list_player.play_item_at_index(0)
             self.say("started_titles")
             self.mainPlaying = True
+        else:
+            self.say("restarted_titles")
+                
 
 

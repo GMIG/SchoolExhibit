@@ -5,7 +5,7 @@ import sys
 import time
 import traceback
 
-import keyboard
+#import keyboard
 import txaio
 import vlc
 from twisted.internet import reactor, tksupport, endpoints
@@ -25,6 +25,7 @@ import tkinter as tk
 
 from VolumeNaidenov import VolumeNaidenov
 from millis import millis
+from ResourcesPaths import sitePath
 
 
 
@@ -40,12 +41,16 @@ if __name__ == '__main__':
         fmt = logging.Formatter('[%(asctime)s.%(msecs)02d] (%(funcName)s) %(message)s', "%H:%M:%S")
         hdlr.setFormatter(fmt)
 
-        factory = Site(Simple('D:\\SCEXIB\\site\\'))
+        factory = Site(Simple(sitePath))
         endpoint = endpoints.TCP4ServerEndpoint(reactor, 8080)
         endpoint.listen(factory)
 
         def begin(arduino: ArduinoUniversal):
             arduino.ang.alpha(0.9)
+            arduino.rot.alpha(0.7)
+
+            arduino.ang.stop()
+            #arduino.rot.stop()
             root = BaseTkContainer()
             tksupport.install(root.tk_instance)
             vlc_instance: vlc.Instance = vlc.Instance()
@@ -54,7 +59,7 @@ if __name__ == '__main__':
                 if x.name == 'space':
                     arduino.outs.on("grn")
                     arduino.outs.on("red")
-            keyboard.on_press(switch)
+            #keyboard.on_press(switch)
 
             main_scene = MainScene(root.tk_instance, "500x500+0+0", vlc_instance)
 
@@ -107,7 +112,7 @@ if __name__ == '__main__':
 
             print(arduino)
 
-        a = ArduinoUniversal("com3")
+        a = ArduinoUniversal("/dev/ttyACM0")
         def arduinoLoaded(x: str):
             if int(x) == 1:
                 begin(a)

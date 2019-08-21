@@ -2,6 +2,7 @@ import vlc
 
 from Scene import Scene
 from VLCPlayer import VLCPlayer
+from ResourcesPaths import mediaPath
 
 
 class Ringer(Scene):
@@ -9,9 +10,9 @@ class Ringer(Scene):
     def __init__(self, instance = vlc.Instance()):
         super().__init__()
         self.audio_player = VLCPlayer(instance)
-        self.audio_player.media_player.audio_output_set(b'mmdevice')
+        self.audio_player.media_player.audio_output_set(b'sndio')
         self.audio_player.media_list_player.set_playback_mode(vlc.PlaybackMode.default)
-        self.audio_player.media_list.add_media("D:\\SCEXIB\\doorbell.mp3")
+        self.audio_player.media_list.add_media(mediaPath + "doorbell.mp3")
         self.audio_player.add_listener("stop", self.__stop_event)
         self.active = False
         self.was_pressed_during_active = False
