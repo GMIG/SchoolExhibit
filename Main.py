@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
         def begin(arduino: ArduinoUniversal):
             arduino.ang.alpha(0.9)
-            arduino.rot.alpha(0.7)
+            arduino.rot.alpha(0.2)
 
             arduino.ang.stop()
             #arduino.rot.stop()
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
             sg1 = ScreenGolubeva()
             def signed(*vargs, **kwargs):
-                 main_scene.start_video(2)
+                 main_scene.start_video(3)
                  arduino.outs.on("red")
             sg1.on_sign(signed)
             sg1.activate()

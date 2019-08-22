@@ -17,7 +17,8 @@ class VolumeNaidenov(Scene):
         super().__init__()
         self.active = False
         self.audio_player = VLCPlayer(vlc.Instance())
-        self.audio_player.media_player.audio_output_set(b'waveout')
+        
+        self.audio_player.media_player.audio_output_set(b'alsa')
         self.audio_player.media_list_player.set_playback_mode(vlc.PlaybackMode.loop)
         self.audio_player.play_file(mediaPath + "ff.mp3")
         self.lastT = 0
@@ -38,6 +39,7 @@ class VolumeNaidenov(Scene):
             velocity = abs(dVal/dt)
             self.lastVal = val
             self.lastT = millis()
+            logging.debug(velocity)
             vol = int(self.audio_player.media_player.audio_get_volume()) + 7
             reactor.callInThread(self.audio_player.setvolume, vol)
             if vol > self.vol_threshold:
