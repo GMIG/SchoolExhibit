@@ -24,6 +24,8 @@ from VLCPlayerTK import BaseTkContainer, VLCPlayerTK
 import tkinter as tk
 
 from VolumeNaidenov import VolumeNaidenov
+from Belikov import Belikov
+
 from millis import millis
 from ResourcesPaths import sitePath
 
@@ -59,17 +61,19 @@ if __name__ == '__main__':
                 if x.name == 'space':
                     arduino.outs.on("grn")
                     arduino.outs.on("red")
-            #keyboard.on_press(switch)
 
-            main_scene = MainScene(root.tk_instance, "500x500+0+0", vlc_instance)
-
-            vn = VolumeNaidenov()
+            main_scene = MainScene(root.tk_instance, "500x500+0+0", vlc_instance)            
+            
+            def transition(led: str,videoNum:int,*vargs, **kwargs):
+                arduino.outs.on(led)
+                main_scene.start_video(videoNum)
+            
+            naidenov = VolumeNaidenov()
             def volume_changed(*vargs, **kwargs):
                 arduino.outs.on("grn")
                 main_scene.start_video(2)
-            vn.on_volume(volume_changed)
-            arduino.on_rot(vn.dynamic_rotation)
-            vn.activate()
+            naidenov.on_volume(volume_changed)
+            arduino.on_rot(naidenov.dynamic_rotation)
 
             ringer = Ringer(vlc_instance)
             def ring_ended(*vargs, **kwargs):
@@ -77,26 +81,30 @@ if __name__ == '__main__':
                 arduino.outs.on("red")
             ringer.on_ring_end(ring_ended)
             arduino.on_but(ringer.button)
-            ringer.activate()
 
-            sg1 = ScreenGolubeva()
+            golubeva = ScreenGolubeva()
             def signed(*vargs, **kwargs):
                  main_scene.start_video(3)
                  arduino.outs.on("red")
-            sg1.on_sign(signed)
-            sg1.activate()
+            golubeva.on_sign(signed)
+            
+            belikov = Belikov()
+            def pushed(*vargs, **kwargs):
+                 main_scene.start_video(3)
+                 arduino.outs.on("red")
+            belikov.on_pushed(pushed)
+            arduino.on_but4(belikov.button)
+            
+            scenes = [naidenov,ringer,golubeva,belikov]
+            
+            [scene.activate() for scene in scenes] 
 
             def switch_all_off(*args, **kwargs):
-                vn.deactivate()
-                ringer.deactivate()
-                sg1.deactivate()
+                [scene.deactivate() for scene in scenes]
 
             def switch_all_on(*args, **kwargs):
-                vn.activate()
-                ringer.activate()
-                sg1.activate()
-                arduino.outs.off("grn")
-                arduino.outs.off("red")
+                [scene.activate() for scene in scenes]                
+                arduino.outs.allOff()
 
             main_scene.on_started_video(switch_all_off)
             main_scene.on_started_titles(switch_all_on)
@@ -112,11 +120,12 @@ if __name__ == '__main__':
 
             print(arduino)
 
-        a = ArduinoUniversal("/dev/ttyACM0")
+        a = ArduinoUniversal("/dev/ttyACM1")
         def arduinoLoaded(x: str):
             if int(x) == 1:
                 begin(a)
-        a.on_sys(arduinoLoaded)
+        reactor.callLater(2, begin, a)
+        #a.on_sys(arduinoLoaded)
         a.addEmptyIfAbsent = True
         a.start()
         reactor.run()

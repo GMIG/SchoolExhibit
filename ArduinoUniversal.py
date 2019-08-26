@@ -26,7 +26,8 @@ class ArduinoUniversal(LineReceiver, Device):
         return self.__class__.__name__ + "(" + self.__port + ")"
 
     def start(self):
-        SerialPort(self, self.__port, reactor, baudrate=57600)
+        self.__serialPort = SerialPort(self, self.__port, reactor, baudrate=57600)
+
 
     def rawDataReceived(self, data):
         pass
@@ -68,7 +69,7 @@ class ArduinoUniversal(LineReceiver, Device):
             string = "[" + str(self.__current_command_id) + "]" + part_name + "." + \
                      cmd_name + "(" + str(argument) + ")" + "\n"
             logging.debug("sending to arduino:" + string)
-            self.transport.write(bytes(string, 'ascii'))
+            self.transport.write(bytes(string, 'utf-8'))
         except AttributeError as err:
             logging.error(err, exc_info=True)
             return defer.fail(Exception("Attempting to write to uninitialized port"))
