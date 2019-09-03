@@ -7,7 +7,7 @@ from ResourcesPaths import mediaPath
 
 class Ringer(Scene):
 
-    def __init__(self, instance = vlc.Instance()):
+    def __init__(self, instance = vlc.Instance("--no-xlib")):
         super().__init__()
         self.audio_player = VLCPlayer(instance)
         self.audio_player.media_player.audio_output_set(b'sndio')

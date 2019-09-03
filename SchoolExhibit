@@ -20,20 +20,21 @@ indent_mode=2
 [project]
 name=SchoolExhibit
 base_path=/home/pi/Documents/SchoolExhibit/
+description=
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=7
+current_page=19
 FILE_NAME_0=12;None;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2Fwtf;0;4
 FILE_NAME_1=860;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2Funtitled.py;0;4
 FILE_NAME_2=168;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FCodec.py;0;4
 FILE_NAME_3=1114;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FArduinoUniversal.py;0;4
 FILE_NAME_4=0;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FDevice.py;0;4
 FILE_NAME_5=0;Python;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FGTKPlayer.py;0;4
-FILE_NAME_6=1289;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FMain.py;0;4
+FILE_NAME_6=1998;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FMain.py;0;4
 FILE_NAME_7=1497;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FMainScene.py;0;8
 FILE_NAME_8=72;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2Fmillis.py;0;4
 FILE_NAME_9=0;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2Fnative-messaging-example-host;0;4
@@ -46,7 +47,7 @@ FILE_NAME_15=201;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%
 FILE_NAME_16=0;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FTalkerListener.py;0;4
 FILE_NAME_17=0;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FVLCPlayer.py;0;4
 FILE_NAME_18=401;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FVLCPlayerTK.py;0;8
-FILE_NAME_19=0;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FVolumeNaidenov.py;0;4
+FILE_NAME_19=757;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FVolumeNaidenov.py;0;4
 FILE_NAME_20=163;Python;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FResourcesPaths.py;0;4
 
 [VTE]

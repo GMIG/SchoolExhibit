@@ -1,4 +1,6 @@
 import logging
+import ctypes
+
 
 import vlc
 from twisted.internet import reactor
@@ -16,7 +18,7 @@ class VolumeNaidenov(Scene):
     def __init__(self):
         super().__init__()
         self.active = False
-        self.audio_player = VLCPlayer(vlc.Instance())
+        self.audio_player = VLCPlayer(vlc.Instance("--no-xlib"))
         
         self.audio_player.media_player.audio_output_set(b'alsa')
         self.audio_player.media_list_player.set_playback_mode(vlc.PlaybackMode.loop)
@@ -25,9 +27,10 @@ class VolumeNaidenov(Scene):
         self.lastVal = 0
         self.decrease_volume_looper = LoopingCall(self.decrease_volume)
         self.audio_player.media_player.audio_set_volume(0)
-        self.vol_threshold = 70
+        self.vol_threshold = 80
+        self.step = 3
 
-    def dynamic_rotation(self, x: str, *args, **kwargs):
+    def absolute_rotation(self, x: str, *args, **kwargs):
         if self.active:
             val = int(float(x)/900. * 100)
             if self.lastVal == 0 or self.lastT == 0:
@@ -44,10 +47,17 @@ class VolumeNaidenov(Scene):
             reactor.callInThread(self.audio_player.setvolume, vol)
             if vol > self.vol_threshold:
                 self.say("volume")
+                
+    def dynamic_rotation(self, x: str, *args, **kwargs):
+        if self.active:
+            vol = int(self.audio_player.media_player.audio_get_volume()) + self.step
+            reactor.callInThread(self.audio_player.setvolume, vol)
+            if vol > self.vol_threshold:
+                self.say("volume")
 
 
     def decrease_volume(self, *args, **kwargs):
-        vol = self.audio_player.media_player.audio_get_volume() - 3
+        vol = self.audio_player.media_player.audio_get_volume() - 1
         if vol <= 0:
             vol = 0
         reactor.callInThread(self.audio_player.media_player.audio_set_volume, vol)

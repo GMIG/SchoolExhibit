@@ -13,7 +13,7 @@ class MainScene(Talker):
     def __init__(self, tk_instance, geometry: str, vlc_instance):
         super().__init__()
         self.player = VLCPlayerTK(tk_instance, geometry, vlc_instance)
-
+        self.default_track_num = 3
         self.player.media_player.audio_output_set(b'mmdevice')
         self.player.media_list.lock()
         self.player.media_list.add_media(mediaPath + "1.mp4")
@@ -23,7 +23,7 @@ class MainScene(Talker):
         self.player.media_list.add_media(mediaPath + "5.mp4")
         self.player.media_list.unlock()
         self.player.media_list_player.set_playback_mode(vlc.PlaybackMode.repeat)
-        self.player.media_list_player.play_item_at_index(0)
+        self.player.media_list_player.play_item_at_index(self.default_track_num)
         self.player.add_listener("end", self.__on_end)
         self.mainPlaying = True
 
@@ -40,7 +40,7 @@ class MainScene(Talker):
 
     def __on_end(self, *args, **kwargs):
         if not self.mainPlaying:
-            self.player.media_list_player.play_item_at_index(0)
+            self.player.media_list_player.play_item_at_index(self.default_track_num)
             self.say("started_titles")
             self.mainPlaying = True
         else:

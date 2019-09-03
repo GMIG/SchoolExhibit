@@ -23,6 +23,7 @@ screeninfo = "*"
 keyboard = "*"
 autobahn = "*"
 txaio = "*"
+xlib = "*"
 
 [requires]
 python_version = "3.7"

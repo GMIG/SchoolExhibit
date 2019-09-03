@@ -1,9 +1,12 @@
-import cgi
 import html
 import logging
 import sys
 import time
 import traceback
+
+#import ctypes
+#x11 = ctypes.cdll.LoadLibrary("libX11.so")
+#x11.XInitThreads()
 
 #import keyboard
 import txaio
@@ -20,7 +23,7 @@ from Ringer import Ringer
 from ScreenGolubeva import ScreenGolubeva
 from VLCPlayer import VLCPlayer
 from VLCPlayerTK import BaseTkContainer, VLCPlayerTK
-
+import ctypes
 import tkinter as tk
 
 from VolumeNaidenov import VolumeNaidenov
@@ -37,6 +40,9 @@ class Simple(File):
 btn = False
 if __name__ == '__main__':
     try:
+        #x11 = ctypes.cdll.LoadLibrary("libX11.so.6")
+        #x11.XInitThreads()
+
         logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
         rootLog = logging.getLogger()
         hdlr = rootLog.handlers[0]
@@ -51,18 +57,18 @@ if __name__ == '__main__':
             arduino.ang.alpha(0.9)
             arduino.rot.alpha(0.2)
 
-            arduino.ang.stop()
+            #arduino.ang.stop()
             #arduino.rot.stop()
             root = BaseTkContainer()
             tksupport.install(root.tk_instance)
-            vlc_instance: vlc.Instance = vlc.Instance()
+            vlc_instance: vlc.Instance = vlc.Instance("--no-xlib")
             print(vlc_instance.audio_output_enumerate_devices())
             def switch(x):
                 if x.name == 'space':
                     arduino.outs.on("grn")
                     arduino.outs.on("red")
 
-            main_scene = MainScene(root.tk_instance, "500x500+0+0", vlc_instance)            
+            main_scene = MainScene(root.tk_instance, "500x500+960+0", vlc_instance)            
             
             def transition(led: str,videoNum:int,*vargs, **kwargs):
                 arduino.outs.on(led)
@@ -73,7 +79,7 @@ if __name__ == '__main__':
                 arduino.outs.on("grn")
                 main_scene.start_video(2)
             naidenov.on_volume(volume_changed)
-            arduino.on_rot(naidenov.dynamic_rotation)
+            arduino.on_enc(naidenov.dynamic_rotation)
 
             ringer = Ringer(vlc_instance)
             def ring_ended(*vargs, **kwargs):
@@ -84,13 +90,13 @@ if __name__ == '__main__':
 
             golubeva = ScreenGolubeva()
             def signed(*vargs, **kwargs):
-                 main_scene.start_video(3)
+                 main_scene.start_video(4)
                  arduino.outs.on("red")
             golubeva.on_sign(signed)
             
             belikov = Belikov()
             def pushed(*vargs, **kwargs):
-                 main_scene.start_video(3)
+                 main_scene.start_video(5)
                  arduino.outs.on("red")
             belikov.on_pushed(pushed)
             arduino.on_but4(belikov.button)
@@ -120,7 +126,7 @@ if __name__ == '__main__':
 
             print(arduino)
 
-        a = ArduinoUniversal("/dev/ttyACM1")
+        a = ArduinoUniversal("/dev/ttyACM0")
         def arduinoLoaded(x: str):
             if int(x) == 1:
                 begin(a)
