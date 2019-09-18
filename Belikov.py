@@ -21,5 +21,5 @@ class Belikov(Scene):
 
     def button(self, x):
         val = int(x)
-        if self.active and val == 1:
+        if self.active and val == 0:
              self.say("pushed")

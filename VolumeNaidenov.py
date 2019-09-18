@@ -18,9 +18,9 @@ class VolumeNaidenov(Scene):
     def __init__(self):
         super().__init__()
         self.active = False
-        self.audio_player = VLCPlayer(vlc.Instance("--no-xlib"))
+        self.audio_player = VLCPlayer(vlc.Instance())
         
-        self.audio_player.media_player.audio_output_set(b'alsa')
+        self.audio_player.media_player.audio_output_set(b'amem')
         self.audio_player.media_list_player.set_playback_mode(vlc.PlaybackMode.loop)
         self.audio_player.play_file(mediaPath + "ff.mp3")
         self.lastT = 0

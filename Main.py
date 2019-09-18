@@ -32,7 +32,7 @@ from Belikov import Belikov
 from millis import millis
 from ResourcesPaths import sitePath
 
-
+from Trigger import Trigger
 
 class Simple(File):
     pass
@@ -54,54 +54,84 @@ if __name__ == '__main__':
         endpoint.listen(factory)
 
         def begin(arduino: ArduinoUniversal):
-            arduino.ang.alpha(0.9)
-            arduino.rot.alpha(0.2)
+            #arduino.ang.alpha(0.9)
+            #arduino.rot.alpha(0.2)
 
             #arduino.ang.stop()
             #arduino.rot.stop()
             root = BaseTkContainer()
             tksupport.install(root.tk_instance)
-            vlc_instance: vlc.Instance = vlc.Instance("--no-xlib")
+            vlc_instance: vlc.Instance = vlc.Instance()
             print(vlc_instance.audio_output_enumerate_devices())
             def switch(x):
                 if x.name == 'space':
                     arduino.outs.on("grn")
                     arduino.outs.on("red")
 
-            main_scene = MainScene(root.tk_instance, "500x500+960+0", vlc_instance)            
+            main_scene = MainScene(root.tk_instance, "1500x1080+0+0", vlc_instance)            
             
             def transition(led: str,videoNum:int,*vargs, **kwargs):
                 arduino.outs.on(led)
                 main_scene.start_video(videoNum)
             
+            def setupTrigger(name:str, num:int):
+                trg = Trigger(name,arduino)
+                def f(*vargs, **kwargs):
+                    main_scene.start_video(num)
+                trg.on_event(f)
+                return trg
+            """
+            shelTrig = Trigger("shl",arduino)
+            def shel(*vargs, **kwargs):
+                main_scene.start_video(0)
+            shelTrig.on_event(shel)
+            
+            lightTrig = Trigger("vkl",arduino)
+            def vkl(*vargs, **kwargs):
+                main_scene.start_video(1)
+            lightTrig.on_event(vkl)
+"""
+            """
             naidenov = VolumeNaidenov()
             def volume_changed(*vargs, **kwargs):
                 arduino.outs.on("grn")
-                main_scene.start_video(2)
+                main_scene.start_video(5)
             naidenov.on_volume(volume_changed)
-            arduino.on_enc(naidenov.dynamic_rotation)
-
-            ringer = Ringer(vlc_instance)
+            arduino.on_vol(naidenov.dynamic_rotation)
+"""
+            ringer = Ringer()
             def ring_ended(*vargs, **kwargs):
-                main_scene.start_video(1)
+                main_scene.start_video(6)
                 arduino.outs.on("red")
             ringer.on_ring_end(ring_ended)
-            arduino.on_but(ringer.button)
+            arduino.on_rin(ringer.button)
 
             golubeva = ScreenGolubeva()
             def signed(*vargs, **kwargs):
-                 main_scene.start_video(4)
+                 main_scene.start_video(14)
                  arduino.outs.on("red")
             golubeva.on_sign(signed)
             
             belikov = Belikov()
             def pushed(*vargs, **kwargs):
-                 main_scene.start_video(5)
+                 main_scene.start_video(1)
                  arduino.outs.on("red")
             belikov.on_pushed(pushed)
-            arduino.on_but4(belikov.button)
+            arduino.on_lif(belikov.button)
             
-            scenes = [naidenov,ringer,golubeva,belikov]
+            scenes = [ringer,golubeva,belikov]
+            scenes.append(setupTrigger("shl",0))
+            scenes.append(setupTrigger("vkl",1))
+            scenes.append(setupTrigger("bor",2))
+            scenes.append(setupTrigger("alb",3))
+            scenes.append(setupTrigger("bin",4))
+            scenes.append(setupTrigger("box",7))
+            scenes.append(setupTrigger("rad",8))
+            scenes.append(setupTrigger("tel",9))
+            scenes.append(setupTrigger("fot",10))
+            scenes.append(setupTrigger("kom",11))
+            scenes.append(setupTrigger("lif",12))
+
             
             [scene.activate() for scene in scenes] 
 
@@ -126,14 +156,14 @@ if __name__ == '__main__':
 
             print(arduino)
 
-        a = ArduinoUniversal("/dev/ttyACM0")
+        arduino = ArduinoUniversal("/dev/ttyACM0")
         def arduinoLoaded(x: str):
             if int(x) == 1:
                 begin(a)
-        reactor.callLater(2, begin, a)
+        reactor.callLater(4, begin, arduino)
         #a.on_sys(arduinoLoaded)
-        a.addEmptyIfAbsent = True
-        a.start()
+        arduino.addEmptyIfAbsent = True
+        arduino.start()
         reactor.run()
     except Exception as e:
         traceback.print_exc()

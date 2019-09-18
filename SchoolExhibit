@@ -27,7 +27,7 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=19
+current_page=6
 FILE_NAME_0=12;None;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2Fwtf;0;4
 FILE_NAME_1=860;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2Funtitled.py;0;4
 FILE_NAME_2=168;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FCodec.py;0;4
