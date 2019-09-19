@@ -24,6 +24,7 @@ keyboard = "*"
 autobahn = "*"
 txaio = "*"
 xlib = "*"
+pygame = "*"
 
 [requires]
 python_version = "3.7"

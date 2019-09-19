@@ -13,14 +13,14 @@ class MainScene(Talker):
     def __init__(self, tk_instance, geometry: str, vlc_instance):
         super().__init__()
         self.player = VLCPlayerTK(tk_instance, geometry, vlc_instance)
-        self.default_track_num = 13
-        self.player.media_player.audio_output_set(b'sndio')
+        self.default_track_num = 0
         self.player.media_list.lock()
         """self.player.media_list.add_media(mediaPath + "1.mp4")
         self.player.media_list.add_media(mediaPath + "2.mp4")
         self.player.media_list.add_media(mediaPath + "3.mp4")
         self.player.media_list.add_media(mediaPath + "4.mp4")
         self.player.media_list.add_media(mediaPath + "5.mp4")"""
+        self.player.media_list.add_media(mediaPath + "00.mp4")
         self.player.media_list.add_media(mediaPath + "1-Viskrebentseva-hole.mp4")
         self.player.media_list.add_media(mediaPath + "2-Andrushenko.mp4")
         self.player.media_list.add_media(mediaPath + "3-Smilga-text.mp4")
@@ -34,9 +34,11 @@ class MainScene(Talker):
         self.player.media_list.add_media(mediaPath + "11-Tachko-foto.mp4")
         self.player.media_list.add_media(mediaPath + "12-Aitakov.mp4")
         self.player.media_list.add_media(mediaPath + "13-Belikov.mp4")
-        self.player.media_list.add_media(mediaPath + "4.mp4")
-
+        self.player.media_list.add_media(mediaPath + "14-Viskrebentseva-dos.mp4")
+        self.player.media_list.add_media(mediaPath + "15-Golubeva.mp4")
         self.player.media_list.unlock()
+        self.player.media_player.audio_output_set(b'sndio')
+
         self.player.media_list_player.set_playback_mode(vlc.PlaybackMode.repeat)
         self.player.media_list_player.play_item_at_index(self.default_track_num)
         self.player.add_listener("end", self.__on_end)

@@ -31,7 +31,7 @@ from Belikov import Belikov
 
 from millis import millis
 from ResourcesPaths import sitePath
-
+import pygame
 from Trigger import Trigger
 
 class Simple(File):
@@ -48,6 +48,8 @@ if __name__ == '__main__':
         hdlr = rootLog.handlers[0]
         fmt = logging.Formatter('[%(asctime)s.%(msecs)02d] (%(funcName)s) %(message)s', "%H:%M:%S")
         hdlr.setFormatter(fmt)
+        pygame.init()
+        pygame.mixer.init()
 
         factory = Site(Simple(sitePath))
         endpoint = endpoints.TCP4ServerEndpoint(reactor, 8080)
@@ -68,7 +70,7 @@ if __name__ == '__main__':
                     arduino.outs.on("grn")
                     arduino.outs.on("red")
 
-            main_scene = MainScene(root.tk_instance, "1500x1080+0+0", vlc_instance)            
+            main_scene = MainScene(root.tk_instance, "500x500+0+0", vlc_instance)            
             
             def transition(led: str,videoNum:int,*vargs, **kwargs):
                 arduino.outs.on(led)
@@ -91,46 +93,37 @@ if __name__ == '__main__':
                 main_scene.start_video(1)
             lightTrig.on_event(vkl)
 """
-            """
+            
             naidenov = VolumeNaidenov()
             def volume_changed(*vargs, **kwargs):
-                arduino.outs.on("grn")
-                main_scene.start_video(5)
+                main_scene.start_video(6)
             naidenov.on_volume(volume_changed)
             arduino.on_vol(naidenov.dynamic_rotation)
-"""
+
             ringer = Ringer()
             def ring_ended(*vargs, **kwargs):
-                main_scene.start_video(6)
-                arduino.outs.on("red")
+                main_scene.start_video(7)
             ringer.on_ring_end(ring_ended)
             arduino.on_rin(ringer.button)
 
             golubeva = ScreenGolubeva()
             def signed(*vargs, **kwargs):
-                 main_scene.start_video(14)
-                 arduino.outs.on("red")
+                 main_scene.start_video(15)
             golubeva.on_sign(signed)
             
-            belikov = Belikov()
-            def pushed(*vargs, **kwargs):
-                 main_scene.start_video(1)
-                 arduino.outs.on("red")
-            belikov.on_pushed(pushed)
-            arduino.on_lif(belikov.button)
-            
-            scenes = [ringer,golubeva,belikov]
-            scenes.append(setupTrigger("shl",0))
-            scenes.append(setupTrigger("vkl",1))
-            scenes.append(setupTrigger("bor",2))
-            scenes.append(setupTrigger("alb",3))
-            scenes.append(setupTrigger("bin",4))
-            scenes.append(setupTrigger("box",7))
-            scenes.append(setupTrigger("rad",8))
-            scenes.append(setupTrigger("tel",9))
-            scenes.append(setupTrigger("fot",10))
-            scenes.append(setupTrigger("kom",11))
-            scenes.append(setupTrigger("lif",12))
+            scenes = [ringer,golubeva,naidenov]
+            scenes.append(setupTrigger("shl",1))
+            scenes.append(setupTrigger("vkl",2))
+            scenes.append(setupTrigger("bor",3))
+            scenes.append(setupTrigger("alb",4))
+            scenes.append(setupTrigger("bin",5))
+            scenes.append(setupTrigger("box",8))
+            #9 - mazus
+            scenes.append(setupTrigger("tel",10))
+            scenes.append(setupTrigger("fot",11))
+            scenes.append(setupTrigger("kom",12))
+            scenes.append(setupTrigger("lif",13))
+            scenes.append(setupTrigger("fan",14))
 
             
             [scene.activate() for scene in scenes] 
