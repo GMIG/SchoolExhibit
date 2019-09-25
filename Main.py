@@ -8,7 +8,7 @@ import traceback
 #x11 = ctypes.cdll.LoadLibrary("libX11.so")
 #x11.XInitThreads()
 
-#import keyboard
+from pynput import keyboard
 import txaio
 import vlc
 from twisted.internet import reactor, tksupport, endpoints
@@ -28,11 +28,13 @@ import tkinter as tk
 
 from VolumeNaidenov import VolumeNaidenov
 from Belikov import Belikov
+from Radio import Radio
 
 from millis import millis
 from ResourcesPaths import sitePath
 import pygame
 from Trigger import Trigger
+from functools import partial
 
 class Simple(File):
     pass
@@ -65,78 +67,66 @@ if __name__ == '__main__':
             tksupport.install(root.tk_instance)
             vlc_instance: vlc.Instance = vlc.Instance()
             print(vlc_instance.audio_output_enumerate_devices())
-            def switch(x):
-                if x.name == 'space':
-                    arduino.outs.on("grn")
-                    arduino.outs.on("red")
 
-            main_scene = MainScene(root.tk_instance, "500x500+0+0", vlc_instance)            
+            main_scene = MainScene(root.tk_instance, "500x500+0+0", vlc_instance)
             
-            def transition(led: str,videoNum:int,*vargs, **kwargs):
-                arduino.outs.on(led)
-                main_scene.start_video(videoNum)
-            
-            def setupTrigger(name:str, num:int):
+            def transition_to_main(num:int, ledName:str, *vargs, **kwargs):
+                main_scene.start_video(num)
+                arduino.outs.on(ledName)
+                        
+            def setupTrigger(name:str,num:int,led_name:str):
                 trg = Trigger(name,arduino)
-                def f(*vargs, **kwargs):
-                    main_scene.start_video(num)
-                trg.on_event(f)
+                trg.on_event(partial(transition_to_main,num,led_name))
                 return trg
-            """
-            shelTrig = Trigger("shl",arduino)
-            def shel(*vargs, **kwargs):
-                main_scene.start_video(0)
-            shelTrig.on_event(shel)
-            
-            lightTrig = Trigger("vkl",arduino)
-            def vkl(*vargs, **kwargs):
-                main_scene.start_video(1)
-            lightTrig.on_event(vkl)
-"""
+                        
+            scenes = []
+            scenes.append(setupTrigger("shl",1,"shl"))
+            scenes.append(setupTrigger("vkl",2,"vkl"))
+            scenes.append(setupTrigger("bor",3,"bo"))
+            scenes.append(setupTrigger("alb",4,"alb"))
+            scenes.append(setupTrigger("bin",5,"bin"))
             
             naidenov = VolumeNaidenov()
-            def volume_changed(*vargs, **kwargs):
-                main_scene.start_video(6)
-            naidenov.on_volume(volume_changed)
+            naidenov.on_volume(partial(transition_to_main,6,"vol"))
             arduino.on_vol(naidenov.dynamic_rotation)
+            scenes.append(naidenov)
 
             ringer = Ringer()
-            def ring_ended(*vargs, **kwargs):
-                main_scene.start_video(7)
-            ringer.on_ring_end(ring_ended)
+            ringer.on_ring_end(partial(transition_to_main,7,"rin"))
             arduino.on_rin(ringer.button)
+            scenes.append(ringer)
 
-            golubeva = ScreenGolubeva()
-            def signed(*vargs, **kwargs):
-                 main_scene.start_video(15)
-            golubeva.on_sign(signed)
-            
-            scenes = [ringer,golubeva,naidenov]
-            scenes.append(setupTrigger("shl",1))
-            scenes.append(setupTrigger("vkl",2))
-            scenes.append(setupTrigger("bor",3))
-            scenes.append(setupTrigger("alb",4))
-            scenes.append(setupTrigger("bin",5))
-            scenes.append(setupTrigger("box",8))
+            scenes.append(setupTrigger("box",8,"box"))
+            radio = Radio()
+            arduino.on_rad(radio.set_frequency)
+            radio.activate()
             #9 - mazus
-            scenes.append(setupTrigger("tel",10))
-            scenes.append(setupTrigger("fot",11))
-            scenes.append(setupTrigger("kom",12))
-            scenes.append(setupTrigger("lif",13))
-            scenes.append(setupTrigger("fan",14))
-
+            scenes.append(setupTrigger("tel",10,"tel"))
+            scenes.append(setupTrigger("fot",11,"fot"))
+            scenes.append(setupTrigger("kom",12,"kom"))
+            scenes.append(setupTrigger("lif",13,"lif"))
+            scenes.append(setupTrigger("fan",14,"fan"))
+            
+            golubeva = ScreenGolubeva()
+            golubeva.on_sign(partial(transition_to_main,15,"sig"))
+            scenes.append(golubeva)
             
             [scene.activate() for scene in scenes] 
-
             def switch_all_off(*args, **kwargs):
                 [scene.deactivate() for scene in scenes]
 
             def switch_all_on(*args, **kwargs):
                 [scene.activate() for scene in scenes]                
                 arduino.outs.allOff()
-
+                
             main_scene.on_started_video(switch_all_off)
             main_scene.on_started_titles(switch_all_on)
+            
+            def on_press(key):
+                if key == keyboard.Key.space:
+                    main_scene.stop_video()
+            listener = keyboard.Listener(on_press=on_press)
+            listener.start()
 
             # try:
             #     a = player.media_player.audio_output_device_enum()
@@ -146,8 +136,6 @@ if __name__ == '__main__':
             #         a = a[0].next
             # except Exception as e:
             #     print(e)
-
-            print(arduino)
 
         arduino = ArduinoUniversal("/dev/ttyACM0")
         def arduinoLoaded(x: str):

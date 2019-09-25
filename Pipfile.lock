@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "244f2dc0463d1d6a2d1593e0720136bcab6a24859de213336f08fb2763161701"
+            "sha256": "ef8fcd36612578112a9d369ea9e61395adac6979e71a2c5b8bdb729ed5bf531a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -145,14 +145,6 @@
             ],
             "version": "==17.5.0"
         },
-        "keyboard": {
-            "hashes": [
-                "sha256:18b53344408df1973c452549f47a203f20a0e65fbbd4436c72562759fa03c0b8",
-                "sha256:d900fefc9c8dfc0c5d92bea6d6190a2ed9beea1bdbc0e16ce12a235bf5ef6281"
-            ],
-            "index": "pypi",
-            "version": "==0.13.3"
-        },
         "pycparser": {
             "hashes": [
                 "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3",
@@ -200,6 +192,14 @@
             ],
             "version": "==1.9.0"
         },
+        "pynput": {
+            "hashes": [
+                "sha256:9503a0fab13bdab295e432c4738395b93450e342920a4517a09ad27b0101db49",
+                "sha256:e42fe211ec05c62a54a7ac2dd0acc829121030335fac28270221a9d0d3b0f807"
+            ],
+            "index": "pypi",
+            "version": "==1.4.4"
+        },
         "pyserial": {
             "hashes": [
                 "sha256:6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627",
@@ -215,6 +215,14 @@
             ],
             "index": "pypi",
             "version": "==3.0.6109"
+        },
+        "python-xlib": {
+            "hashes": [
+                "sha256:204f280b549352af6cbdaff43405186822ae05749518dd9be209bd88a0088f99",
+                "sha256:cdc806892f28fcd2c52e22a646c2ae3af3f0539cbbacfe7b344231d75eb96095"
+            ],
+            "markers": "'linux' in sys_platform",
+            "version": "==0.25"
         },
         "screeninfo": {
             "hashes": [

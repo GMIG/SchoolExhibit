@@ -24,7 +24,7 @@ class VolumeNaidenov(Scene):
         self.decrease_volume_looper = LoopingCall(self.decrease_volume)
         self.lastT = 0
         self.lastVal = 0
-        self.vol_threshold = 0.8
+        self.vol_threshold = 0.6
         self.step = 0.04
 
     def absolute_rotation(self, x: str, *args, **kwargs):
@@ -49,6 +49,7 @@ class VolumeNaidenov(Scene):
         if self.active:
             vol = self.sound.get_volume() + self.step
             self.sound.set_volume(vol)
+            logging.debug("volume:" + str(vol))
             #reactor.callInThread(self.audio_player.setvolume, vol)
             if vol > self.vol_threshold:
                 self.say("volume")

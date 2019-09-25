@@ -29,7 +29,7 @@ class MainScene(Talker):
         self.player.media_list.add_media(mediaPath + "6-Naidenov.mp4")
         self.player.media_list.add_media(mediaPath + "7-Smilga-rin.mp4")
         self.player.media_list.add_media(mediaPath + "8-Posnik.mp4")
-        self.player.media_list.add_media(mediaPath + "8-Posnik.mp4") #9
+        self.player.media_list.add_media(mediaPath + "8-Posnik.mp4") #9 mazus
         self.player.media_list.add_media(mediaPath + "10-Hachatrian.mp4")
         self.player.media_list.add_media(mediaPath + "11-Tachko-foto.mp4")
         self.player.media_list.add_media(mediaPath + "12-Aitakov.mp4")
