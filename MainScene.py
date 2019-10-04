@@ -20,7 +20,7 @@ class MainScene(Talker):
         self.player.media_list.add_media(mediaPath + "3.mp4")
         self.player.media_list.add_media(mediaPath + "4.mp4")
         self.player.media_list.add_media(mediaPath + "5.mp4")"""
-        self.player.media_list.add_media(mediaPath + "00.mp4")
+        self.player.media_list.add_media(mediaPath + "Title.mp4")
         self.player.media_list.add_media(mediaPath + "1-Viskrebentseva-hole.mp4")
         self.player.media_list.add_media(mediaPath + "2-Andrushenko.mp4")
         self.player.media_list.add_media(mediaPath + "3-Smilga-text.mp4")

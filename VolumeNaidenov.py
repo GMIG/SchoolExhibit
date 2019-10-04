@@ -25,38 +25,20 @@ class VolumeNaidenov(Scene):
         self.lastT = 0
         self.lastVal = 0
         self.vol_threshold = 0.6
-        self.step = 0.04
-
-    def absolute_rotation(self, x: str, *args, **kwargs):
-        if self.active:
-            val = int(float(x)/900. * 100)
-            if self.lastVal == 0 or self.lastT == 0:
-                self.lastT = millis()
-                self.lastVal = val
-                return
-            dt = millis() - self.lastT
-            dVal = val - self.lastVal
-            velocity = abs(dVal/dt)
-            self.lastVal = val
-            self.lastT = millis()
-            logging.debug(velocity)
-            vol = int(self.audio_player.media_player.audio_get_volume()) + 7
-            reactor.callInThread(self.audio_player.setvolume, vol)
-            if vol > self.vol_threshold:
-                self.say("volume")
-                
+        self.step = 0.07
+        self.decrVolStep = 0.01
+       
     def dynamic_rotation(self, x: str, *args, **kwargs):
         if self.active:
             vol = self.sound.get_volume() + self.step
             self.sound.set_volume(vol)
             logging.debug("volume:" + str(vol))
-            #reactor.callInThread(self.audio_player.setvolume, vol)
             if vol > self.vol_threshold:
                 self.say("volume")
 
 
     def decrease_volume(self, *args, **kwargs):
-        vol = (self.sound.get_volume() - 0.0007)
+        vol = (self.sound.get_volume() - self.decrVolStep*self.step )
         if vol <= 0:
             vol = 0
         self.sound.set_volume(vol)
@@ -64,7 +46,7 @@ class VolumeNaidenov(Scene):
     def activate(self, *args, **kwargs):
         if self.decrease_volume_looper.running:
             self.decrease_volume_looper.stop()
-        self.decrease_volume_looper.start(0.01)
+        self.decrease_volume_looper.start(self.decrVolStep)
         self.say("activated")
         self.active = True
 

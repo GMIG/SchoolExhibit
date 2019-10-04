@@ -69,9 +69,10 @@ if __name__ == '__main__':
             print(vlc_instance.audio_output_enumerate_devices())
 
             main_scene = MainScene(root.tk_instance, "500x500+0+0", vlc_instance)
-            
+            arduino.outs.allOn()
             def transition_to_main(num:int, ledName:str, *vargs, **kwargs):
                 main_scene.start_video(num)
+                arduino.outs.allOff()
                 arduino.outs.on(ledName)
                         
             def setupTrigger(name:str,num:int,led_name:str):
@@ -80,7 +81,9 @@ if __name__ == '__main__':
                 return trg
                         
             scenes = []
-            scenes.append(setupTrigger("shl",1,"shl"))
+            shl = Trigger("shl",arduino)
+            shl.on_1(partial(transition_to_main,1,"shl"))
+            scenes.append(shl)
             scenes.append(setupTrigger("vkl",2,"vkl"))
             scenes.append(setupTrigger("bor",3,"bo"))
             scenes.append(setupTrigger("alb",4,"alb"))
@@ -97,13 +100,18 @@ if __name__ == '__main__':
             scenes.append(ringer)
 
             scenes.append(setupTrigger("box",8,"box"))
+            
             radio = Radio()
             arduino.on_rad(radio.set_frequency)
-            radio.activate()
-            #9 - mazus
+            radio.on_death(partial(transition_to_main,9,"rad"))
+
             scenes.append(setupTrigger("tel",10,"tel"))
             scenes.append(setupTrigger("fot",11,"fot"))
-            scenes.append(setupTrigger("kom",12,"kom"))
+            
+            kom = Trigger("kom",arduino)
+            kom.on_1(partial(transition_to_main,12,"kom"))
+
+            scenes.append(kom)
             scenes.append(setupTrigger("lif",13,"lif"))
             scenes.append(setupTrigger("fan",14,"fan"))
             
@@ -117,7 +125,7 @@ if __name__ == '__main__':
 
             def switch_all_on(*args, **kwargs):
                 [scene.activate() for scene in scenes]                
-                arduino.outs.allOff()
+                arduino.outs.allOn()
                 
             main_scene.on_started_video(switch_all_off)
             main_scene.on_started_titles(switch_all_on)

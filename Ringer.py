@@ -35,7 +35,7 @@ class Ringer(Scene):
     def button(self, x):
         val = int(x)
         if self.active:
-            if val == 1:
+            if val == 0:
                 self.was_pressed_during_active = True
                 self.audio_player.media_list_player.play_item_at_index(0)
             else:
