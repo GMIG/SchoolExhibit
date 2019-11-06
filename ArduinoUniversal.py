@@ -26,7 +26,7 @@ class ArduinoUniversal(LineReceiver, Device):
         return self.__class__.__name__ + "(" + self.__port + ")"
 
     def start(self):
-        self.__serialPort = SerialPort(self, self.__port, reactor, baudrate=57600)
+        self.__serialPort = SerialPort(self, self.__port, reactor, baudrate=115200)
 
 
     def rawDataReceived(self, data):

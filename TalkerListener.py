@@ -63,7 +63,10 @@ class Talker(object):
                 self.__listeners[listener_name](*args, **kwargs)
             except Exception as e:
                 logging.debug(e)
-
+                
+    #def say_by_expr(self, filter_function: Callable[[str], bool], *args, **kwargs) -> NoReturn:
+    #    (say(name,*args, **kwargs) for name in self.__listeners.keys() if filter_function(name))
+        
     def say_array(self, array_phrase: List[str]) -> NoReturn:
         if len(array_phrase) < 2:
             raise ValueError("Array phrase error:" + str(array_phrase))

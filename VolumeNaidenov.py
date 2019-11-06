@@ -19,14 +19,15 @@ class VolumeNaidenov(Scene):
     def __init__(self):
         super().__init__()
         self.active = False
-        self.sound = pygame.mixer.Sound(file = mediaPath + "ff.wav")
+        self.sound = pygame.mixer.Sound(file = mediaPath + "ff1.wav")
         reactor.callInThread(lambda : self.sound.play(loops = -1))
         self.decrease_volume_looper = LoopingCall(self.decrease_volume)
+        self.sound.set_volume(0)
         self.lastT = 0
         self.lastVal = 0
-        self.vol_threshold = 0.6
-        self.step = 0.07
-        self.decrVolStep = 0.01
+        self.vol_threshold = 0.8
+        self.step = 0.03
+        self.decrVolStep = 0.07
        
     def dynamic_rotation(self, x: str, *args, **kwargs):
         if self.active:

@@ -15,7 +15,7 @@ indent_type=0
 indent_hard_tab_width=8
 detect_indent=false
 detect_indent_width=false
-indent_mode=2
+indent_mode=1
 
 [project]
 name=SchoolExhibit
@@ -28,27 +28,28 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=4
+current_page=19
 FILE_NAME_0=168;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FCodec.py;0;4
-FILE_NAME_1=1429;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FArduinoUniversal.py;0;4
+FILE_NAME_1=704;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FArduinoUniversal.py;0;4
 FILE_NAME_2=406;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FDevice.py;0;4
 FILE_NAME_3=0;Python;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FGTKPlayer.py;0;4
-FILE_NAME_4=1861;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FMain.py;0;4
+FILE_NAME_4=2978;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FMain.py;0;4
 FILE_NAME_5=1450;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FMainScene.py;0;8
 FILE_NAME_6=72;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2Fmillis.py;0;4
 FILE_NAME_7=0;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2Fnative-messaging-example-host;0;4
 FILE_NAME_8=455;None;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FPipfile;0;4
 FILE_NAME_9=0;None;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FPipfile.lock;0;8
 FILE_NAME_10=1154;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FRinger.py;0;8
-FILE_NAME_11=0;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FScene.py;0;4
+FILE_NAME_11=238;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FScene.py;0;4
 FILE_NAME_12=423;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FScreenGolubeva.py;0;4
 FILE_NAME_13=201;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FscreeninfoTest.py;0;4
-FILE_NAME_14=0;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FTalkerListener.py;0;4
+FILE_NAME_14=2280;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FTalkerListener.py;0;4
 FILE_NAME_15=3046;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FVLCPlayer.py;0;4
 FILE_NAME_16=401;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FVLCPlayerTK.py;0;8
-FILE_NAME_17=139;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FVolumeNaidenov.py;0;4
+FILE_NAME_17=505;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FVolumeNaidenov.py;0;4
 FILE_NAME_18=163;Python;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FResourcesPaths.py;0;4
-FILE_NAME_19=1020;Python;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FRadio.py;0;4
+FILE_NAME_19=237;Python;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FRadio.py;0;4
+FILE_NAME_20=391;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDocuments%2FSchoolExhibit%2FTrigger.py;0;4
 
 [VTE]
 last_dir=/home/pi/Documents/SchoolExhibit
